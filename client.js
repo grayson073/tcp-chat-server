@@ -23,3 +23,5 @@ const socket = net.connect(2500, () => {
         socket.destroy();
     });
 });
+
+socket.setEncoding('utf8');
