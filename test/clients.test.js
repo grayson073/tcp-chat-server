@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Clients = require('../lib/clients');
+const ChatRoom = require('../lib/ChatRoom');
 
 
 describe('Clients', () => {
@@ -9,7 +9,7 @@ describe('Clients', () => {
     const c3 = {};
     let clients = null;
     beforeEach(() => {
-        clients = new Clients();
+        clients = new ChatRoom();
         clients.add(c1);
         clients.add(c2);
         clients.add(c3);
@@ -26,12 +26,19 @@ describe('Clients', () => {
         assert.equal(c3.username, 'User#3');
     });
 
-    it('Removes a client', () => {
-        clients.remove(c2);
-        const allClients = clients.getAllClients();
-        assert.deepEqual(allClients, [c1, c3]);
+    it('Returns object of assigned username', () => {
+        const result = clients.getClient(c2.username);
+        assert.deepEqual(result, c2);
     });
 
+    it('Removes a client', () => {
+        assert.ok(clients.remove('User#1'));
+    });
+
+    it('Renames a user', () => {
+        clients.rename(c1.username, 'Frank');
+        assert.deepEqual(clients.getClient(c1.username), c1);
+    });
 
 
 });
