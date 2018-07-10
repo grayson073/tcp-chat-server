@@ -8,6 +8,7 @@ describe('Clients', () => {
     const c2 = {};
     const c3 = {};
     let clients = null;
+    
     beforeEach(() => {
         clients = new ChatRoom();
         clients.add(c1);
@@ -16,7 +17,7 @@ describe('Clients', () => {
     });
 
     it('Stores clients', () => {
-        const allClients = clients.getAllClients();
+        const allClients = clients.all();
         assert.deepEqual(allClients, [c1, c2, c3]);
     });
 
@@ -37,7 +38,13 @@ describe('Clients', () => {
 
     it('Renames a user', () => {
         clients.rename(c1.username, 'Frank');
-        assert.deepEqual(clients.getClient(c1.username), c1);
+        const result = clients.getClient(c1.username);
+        assert.deepEqual(result, c1);
+    });
+
+    it('Won\'t use an existing username', () => {
+        clients.rename(c1.username, 'User#2');
+        assert.deepEqual(c1.username, 'User#1');
     });
 
 
